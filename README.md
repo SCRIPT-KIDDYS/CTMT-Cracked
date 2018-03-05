@@ -1,5 +1,5 @@
 <h1 align="center">
-<img src="https://github.com/Fluffer-Nutter/CTMT-Cracked/blob/official/CTMT%20Cracked/Images/CTMTCracked.png?raw=true">
+<img src="https://github.com/SCRIPT-KIDDYS/CTMT-Cracked/blob/master/CTMT%20Cracked/Images/CTMTCracked.png?raw=true">
 <br>
 CTMT Cracked
 <br>
