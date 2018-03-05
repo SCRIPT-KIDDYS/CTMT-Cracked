@@ -6,6 +6,7 @@ using System.IO;
 using System.Media;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
@@ -137,17 +138,22 @@ namespace CTMT_Cracked
 
             foreach (string name in tempf.Split(','))
             {
-                    string nameogameo = name.TrimStart('\n');
-                    string iguessthiswillwork = nameogameo.Replace(" ", "%20");
-                    WebClient client = new WebClient();
-                    String downloadedString = client.DownloadString("http://www.cyberterminators.co/ctmt-v2/getDetails.php?gameName=" + iguessthiswillwork);
-                    CTDecrypt.DecryptStuff(downloadedString, nameogameo, fukmee);
+                string nameogameo = name.TrimStart('\n');
+                string iguessthiswillwork = nameogameo.Replace(" ", "%20");
+                WebClient client = new WebClient();
+                String downloadedString = client.DownloadString("http://www.cyberterminators.co/ctmt-v2/getDetails.php?gameName=" + iguessthiswillwork);
+                CTDecrypt.DecryptStuff(downloadedString, nameogameo, fukmee);
+                ChangeLableText(name);
             }
             
 
         }
         #endregion
 
+        private void ChangeLableText(string lala)
+        {
+            label2.Invoke(new Action(() => label2.Text = lala.TrimStart('\n')));
+        }
         #region Message Box
         public void Dostufflilhomie()
         {
