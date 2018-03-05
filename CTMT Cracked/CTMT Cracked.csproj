@@ -65,8 +65,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CS Files\AES Encryption.cs" />
-    <Compile Include="CS Files\Caesar Cipher.cs" />
     <Compile Include="CS Files\CTDecrypt.cs" />
     <Compile Include="SplashScreen.cs">
       <SubType>Form</SubType>
@@ -107,6 +105,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -124,8 +123,6 @@
     <None Include="Audio\Wolf.wav" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\HomeScreen.jpg" />
-    <Content Include="Images\HomeScreenCracked.jpg" />
     <Content Include="Images\Loading.jpg" />
     <Content Include="Images\LoadingCracked.jpg" />
     <Content Include="Images\SKLogo.ico" />

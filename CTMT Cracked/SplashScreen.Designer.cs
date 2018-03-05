@@ -76,6 +76,7 @@
             this.Opacity = 0D;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "SplashScreen";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Loading_Picture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LoadingCracked_Picture)).EndInit();
             this.ResumeLayout(false);

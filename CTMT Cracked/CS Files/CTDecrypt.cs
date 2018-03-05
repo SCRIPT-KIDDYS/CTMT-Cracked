@@ -1,63 +1,129 @@
-﻿using System;
+﻿#region USINGS
+using System;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+#endregion
 
 class CTDecrypt
     {
     
-    public static string SavedLocation;
+    #region Static Info
+    public static string fukme = "";
+    #endregion
 
-    public static int CaesarIntt;
-
-    public static void DecryptStuff(string Fluffy, string GameName, string AESPassword, int CaesarInt, string SaveLocation)
+    #region AES Decrypt
+    public static string Decrypt(string cipherText)
     {
-        SavedLocation = SaveLocation;
-        CaesarIntt = CaesarInt;
-        if (Fluffy.Length < 7) { SaveFiles("He didnt upload codes for this game", GameName); }
+        string EncryptionKey = "ICamYEloBquEntR";
+        cipherText = cipherText.Replace(" ", "+");
+        byte[] cipherBytes = Convert.FromBase64String(cipherText);
+        using (Aes encryptor = Aes.Create())
+        {
+            Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x48, 0x39, 0x01, 0x19, 0x28, 0x4D, 0xE2, 0x94, 0xD2, 0x33, 0x84, 0x69, 0x0A });
+            encryptor.Key = pdb.GetBytes(32);
+            encryptor.IV = pdb.GetBytes(16);
+            using (MemoryStream ms = new MemoryStream())
+            {
+                using (CryptoStream cs = new CryptoStream(ms, encryptor.CreateDecryptor(), CryptoStreamMode.Write))
+                {
+                    try
+                    {
+                        cs.Write(cipherBytes, 0, cipherBytes.Length);
+                        cs.Close();
+                    }
+                    catch { }
+                }
+                cipherText = Encoding.Unicode.GetString(ms.ToArray());
+            }
+        }
+        return cipherText;
+    }
+    #endregion
+
+    #region String Crap, Kinda bad coding sorry
+    public static void stringthing(string lala, string date, string gamename)
+    {
+        string final = "";
+        string poop = CharKey(lala);
+        string strOne = poop;
+        string[] strArrayOne = new string[] { "" };
+        strArrayOne = strOne.Split(',');
+        strArrayOne = strArrayOne.Skip(1).ToArray();
+        string[] strResult = strArrayOne.Select(y => string.Concat(y.Reverse())).ToArray();
+        string dateandstuff = gamename + " - " + date + Environment.NewLine;
+
+        foreach (var items in strResult)
+        {
+            byte[] data = Convert.FromBase64String(items);
+            final += Encoding.UTF8.GetString(data) + Environment.NewLine;
+        }
+        savemeplease(dateandstuff + final, gamename);
+    }
+    #endregion
+
+    #region Save to file
+    public static void savemeplease(string finalinfo, string gamename)
+    {
+        StreamWriter file = new System.IO.StreamWriter(@fukme + @"\" + gamename + ".txt");
+        file.WriteLine(finalinfo);
+        file.Close();
+    }
+    #endregion
+
+    #region PreDecryption
+    public static void DecryptStuff(string fluffy, string gamename, string fukmee)
+    {
+        fukme = fukmee;
+        if (fluffy == "@@" || fluffy == "") { }
         else
         {
-            string DecryptString = AES_Encryption.Decrypt(Fluffy, AESPassword);
+            string DecryptString = Decrypt(fluffy);
             if (DecryptString.StartsWith("Y"))
             {
-                string ReformatString = "N" + DecryptString.Substring(DecryptString.IndexOf('@') + 2);
-                string Date = ReformatString.Split('N', '@')[1];
-                string Decoded = ReformatString.Replace("@@", ",");
-                StringFormat(Decoded, Date, GameName);
+                string letsrockandroll = "N" + DecryptString.Substring(DecryptString.IndexOf('@') + 2);
+                string Date = letsrockandroll.Split('N', '@')[1];
+                string Decoded = letsrockandroll.Replace("@@", ",");
+                stringthing(Decoded, Date, gamename);
             }
             else
             {
-                string ReformatString = DecryptString.Substring(1);
-                string Date = ReformatString.Split('N', '@')[0];
+                string letsrockandroll = DecryptString.Substring(1);
+                string Date = letsrockandroll.Split('N', '@')[0];
                 string Decoded = DecryptString.Replace("@@", ",");
-                StringFormat(Decoded, Date, GameName);
+                stringthing(Decoded, Date, gamename);
             }
         }
     }
+    #endregion
 
-    public static void StringFormat(string Decoded, string Date, string GameName)
+    #region CharKey (Copy Paste)
+    public static string CharKey(string line)
     {
-        string Final = "";
-        string CharKeyDecodes = Caesar_Cipher.CharKey(Decoded, CaesarIntt);
-        string[] StringArray = new string[] { "" };
-        StringArray = CharKeyDecodes.Split(',');
-        StringArray = StringArray.Skip(1).ToArray();
-        string[] StringArrayResults = StringArray.Select(y => string.Concat(y.Reverse())).ToArray();
-        string GameNameAndDate = GameName + " - " + Date + Environment.NewLine + Environment.NewLine;
-
-        foreach (var Item in StringArrayResults)
+        string result = "";
+        string s = line;
+        foreach (char c in s)
         {
-            byte[] Data = Convert.FromBase64String(Item);
-            Final += Encoding.UTF8.GetString(Data) + Environment.NewLine;
+            result += (LettersandStuff(18, c));
         }
-        SaveFiles(GameNameAndDate + Final, GameName);
+        return result;
     }
 
-    public static void SaveFiles(string FinalInfo, string GameName)
+    static char LettersandStuff(int int_0, char stringey)
     {
-        StreamWriter File = new StreamWriter(SavedLocation + @"\" + GameName + ".txt");
-        File.WriteLine(FinalInfo);
-        File.Close();
+        char result;
+        if (!char.IsLetter(stringey))
+        {
+            result = stringey;
+        }
+        else
+        {
+            char c = char.IsUpper(stringey) ? 'A' : 'a';
+            result = (char)(((int)stringey + int_0 - (int)c) % 26 + (int)c);
+        }
+        return result;
     }
+    #endregion
 }
 

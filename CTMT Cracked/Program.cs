@@ -11,20 +11,12 @@ namespace CTMT_Cracked
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-
-        public static bool SplashScreenClosed { get; set; }
-
         [STAThread]
         static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            SplashScreenClosed = false;
             Application.Run(new SplashScreen());
-            if (SplashScreenClosed)
-            {
-                Application.Run(new MainWindow());
-            }
         }
     }
 }
