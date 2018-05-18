@@ -127,7 +127,7 @@ namespace CTMT_Cracked
         public void Httpstuffiguess(string fukmee)
         {
 
-            String downloadthing = "http://cyberterminators.co/details.xml";
+            String downloadthing = "http://cyberterminators.co/details-v2.xml";
 
             XmlDocument doc1 = new XmlDocument();
             doc1.Load(downloadthing);
